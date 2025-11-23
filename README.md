@@ -6,4 +6,4 @@ O Projeto foi feito pelos alunos Rafael Rodrigues Magdaleno - Ra: 2000649 e Jean
 
 No arquivo - GrafoNaoImplementado.py, vemos como é criado uma lista de adjacência em python de um grafo
 No segundo arquivo - GrafoMatrizNaoImplementado.py, vemos como é feito uma matriz de adjacência em python de um grafo
-No terceito arquivo vemos como fazer uma lista de arestas e também está implementado uma busca de largura padrão e uma busca de largura por menor distância em python de um grafo
+No terceito arquivo vemos como fazer uma lista de arestas e também está implementado uma busca de largura padrão, uma busca de largura por menor distância em python de um grafo, busca de profundiade e a busca de profundidade para detecção de ciclos
