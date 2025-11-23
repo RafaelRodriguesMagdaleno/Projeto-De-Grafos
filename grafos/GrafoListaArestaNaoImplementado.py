@@ -151,6 +151,56 @@ def bfs_menor_caminho(vertices, arestas, inicio, destino):
 
     return []  # E ele vai retornar vazio caso não encontre o caminho
 
+# Busca em Profundidade (DFS)
+
+# A busca em profundidade guarda o vértice origem e o caminho até o destino em uma pilha (LIFO)
+
+def dfs(vertices, arestas, inicio):
+
+    pilha = [{"vertice": inicio, "caminho": [inicio]}]
+    visitados = []
+
+    while pilha:
+        item = pilha.pop()  # Retira o último elemento da pilha
+        vertice = item["vertice"]
+        caminho = item["caminho"]
+
+        if vertice not in visitados:
+            visitados.append(vertice)
+
+            for viz in vizinhos(vertices, arestas, vertice):
+                # Verifica se o vizinho já está na pilha ou já foi visitado
+                if viz not in visitados and all(viz != elem["vertice"] for elem in pilha):
+                    pilha.append({"vertice": viz, "caminho": caminho + [viz]})
+
+    return visitados
+
+# Busca em Profundidade para Detecção de Ciclos
+
+# A busca em profundidade agora guarda o vértice atual e o vértice pai que o adicionou na pilha
+# Isso permite identificar ciclos ignorando a ligação direta com o pai
+
+def dfs_detectar_ciclo(vertices, arestas, inicio):
+    pilha = [{"vertice": inicio, "pai": None}]  # Inserir vértice inicial com pai vazio
+    visitados = []
+
+    while pilha:
+        item = pilha.pop()
+        vertice = item["vertice"]
+        pai = item["pai"]
+
+        if vertice not in visitados:
+            visitados.append(vertice)
+
+            for viz in vizinhos(vertices, arestas, vertice):
+                if viz not in visitados and all(viz != elem["vertice"] for elem in pilha):
+                    pilha.append({"vertice": viz, "pai": vertice})
+                else:
+                    if viz != pai:
+                        return True  # ciclo detectado
+
+    return False  # Nenhum ciclo detectado
+
 # Programa principal abaixo
 
 def main():
@@ -177,6 +227,13 @@ def main():
     print("\n--- Busca de Largura por menor Caminho ---")
     menor = bfs_menor_caminho(vertices, arestas, "A", "C")
     print("Menor caminho de A até C:", menor if menor else "não encontrado")
+
+    print("\n--- Busca em Profundidade (DFS) ---")
+    print("Visitados a partir de A:", dfs(vertices, arestas, "A"))
+
+    print("\n--- DFS para Detecção de Ciclos ---")
+    ciclo = dfs_detectar_ciclo(vertices, arestas, "A")
+    print("Ciclo detectado?", "Sim" if ciclo else "Não")
 
 
 if __name__ == "__main__":
